@@ -37,7 +37,6 @@ var stringifyJSON = function(obj) {
     } 
 
     for (var key in obj) {
-      console.log(typeof key);
       if (obj[key] instanceof Function || typeof obj[key] === undefined) {
         return '{}';
       }
