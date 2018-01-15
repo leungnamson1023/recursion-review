@@ -11,7 +11,11 @@ var stringifyJSON = function(obj) {
     return '' + obj;
   } else if (typeof obj === 'string') {
     return '"' + obj + '"';
-  } else if (Array.isArray(obj)) {
+  } 
+
+
+  // for arrays
+  else if (Array.isArray(obj)) {
     if (obj.length < 1) {
       return '[]';
     } else {
@@ -20,39 +24,34 @@ var stringifyJSON = function(obj) {
       }); 
       return '[' + arrayVals + ']';
     }
-  }
-  //objects
+  } 
 
-  if (obj instanceof Object) {
+    
+  // for obj
+  else if (obj instanceof Object) {
     //if empty obj
     // keys in obj to string
     var arrOfKeys = Object.keys(obj);
-    console.log(arrOfKeys);
     if (arrOfKeys.length === 0 ) {
       return '{}';
     } 
 
     for (var key in obj) {
-    console.log(key);
-      if (key === 'string') {
+      console.log(typeof key);
+      if (obj[key] instanceof Function || typeof obj[key] === undefined) {
+        return '{}';
+      }
+      if (typeof key === 'string') {
         objArray.push('"' + key + '":' + stringifyJSON(obj[key]));
       } else if (typeof key === 'boolean' || key === null || typeof key === 'number') {
         objArray.push('' + key + ':' + stringifyJSON(obj[key]));
+    
       }
-
-      return '{' + objArray + '}';
       // objArray.push(stringifyJSON(obj[key]));
       // objArray.push(stringifyJSON(key));
     }
+    return '{' + objArray + '}';
   }
-  
-
-
-  // if parameter is array, depending on the value of each element, 
-  //run it back into the function and string it. return stringify array after
-
-
-  // if it is an object, take each key and string it, take each property and string it, return object stringed.
 };
 
 
